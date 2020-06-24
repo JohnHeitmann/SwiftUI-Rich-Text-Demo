@@ -69,7 +69,7 @@ struct BasicRichTextView: View {
 
 ![Rendered](images/basic_rich_text.png)
 
-## Programmatic Example
+## Data-Driven Example
 
 With that simple primitive we can build up a renderer for a simple HTML-like or Markdown-like
 internal text representation. In this example, blocks of rich text are stacked vertically and
