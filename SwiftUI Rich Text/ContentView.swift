@@ -17,6 +17,15 @@ struct BasicRichTextView: View {
 
 // MARK: - Demo of programmatic rich text
 
+/*
+ We'll use a model similar to html: blocks stack vertically
+ on top of each other, and inline data wraps around
+ horizontally.
+ 
+ This makes rendering easy: blocks are arrayed in a VStack,
+ while inline values are concatenated with Text() + Text()
+ */
+
 enum RichTextBlock: Hashable {
     case plainTextBlock([InlineText])
     case quote([RichTextBlock])
