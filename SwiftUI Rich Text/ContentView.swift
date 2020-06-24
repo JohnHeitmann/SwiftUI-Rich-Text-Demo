@@ -32,7 +32,7 @@ struct TextAttributes: OptionSet, Hashable {
 
     static let bold    = TextAttributes(rawValue: 1 << 0)
     static let italic  = TextAttributes(rawValue: 1 << 1)
-    static let heading   = TextAttributes(rawValue: 1 << 2)
+    static let heading = TextAttributes(rawValue: 1 << 2)
 }
 
 struct ProgrammaticRichTextView: View {
@@ -62,8 +62,7 @@ struct TextBlockView: View {
     }
     
     func renderInlineText(_ text: [InlineText]) -> some View {
-        var result: Text = Text("")
-        for t in text {
+        return text.map {t in
             var atomView: Text = Text(t.text)
             if t.attributes.contains(.bold) {
                 atomView = atomView.bold()
@@ -74,9 +73,8 @@ struct TextBlockView: View {
             if t.attributes.contains(.heading) {
                 atomView = atomView.font(.headline)
             }
-            result = result + atomView
-        }
-        return result
+            return atomView
+        }.reduce(Text(""), +)
     }
 
     func renderQuote(_ quote: [RichTextBlock]) -> some View {
@@ -91,7 +89,12 @@ struct TextBlockView: View {
     }
 }
 
+// MARK: -- Preview and demo data
+
 let demoBlocks: [RichTextBlock] = [
+    .plainTextBlock([
+        InlineText(text: "Quote", attributes: [.heading]),
+    ]),
     .quote([
         .plainTextBlock([
             InlineText(text: "There are texts that have ", attributes: []),
