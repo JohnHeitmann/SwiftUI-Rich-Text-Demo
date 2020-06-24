@@ -15,7 +15,8 @@ Renders to: "This is **bold** text."
 
 Prior to SwiftUI, the main way to render rich text (ie styled and formatted text like
 markdown output) was to use NSAttributedString. SwiftUI didn't launch with support
-for NSAttributedString, and seemingly only supported block-level text styling.
+for NSAttributedString, and all the examples I've seen only ever use block-level
+text styles.
 
 However, SwiftUI _does_ directly support rich text with a little known (at least
 to me) feature of the `Text` view:
@@ -148,7 +149,7 @@ The inline text renderer uses the concatenation technique:
 ```
 
 The quote renderer is just a vstack with a border. It recursively calls TextBlockView
-showing we can have the power to arbitrarily embed text blocks inside other blocks:
+showing we have the the flexibility to arbitrarily embed text blocks inside other blocks:
 
 ```swift
     func renderQuote(_ quote: [RichTextBlock]) -> some View {
@@ -188,13 +189,18 @@ Rendered:
 
 ![Rendered](images/coco_rich_text.png)
 
+## Problems
+
+Clickable links don't seem to be supportable. While you can attach `onTapGesture`
+to `Text`, it returns a generic `View`, so you can no longer concatenate the
+result.
 
 ## Unexplored
 
 * How does performance compare with NSAttributedString text views under AppKit?
 * Is it possible for user code to create custom inlineable Text elements, for example to add
 widgets like buttons inline into text?
-* Simulating links
+* Simulating links with hacks or workarounds.
 
 ## Alternative: Wrapping NSAttributedString Views
 
@@ -205,5 +211,5 @@ experience it partly works. There are two problems with this technique.
 First, it relies on adapters to AppKit or UIKit. How much this is a problem is going to vary
 from person to person.
 
-Second, since layout is recalculated asynchronously, the bottom edge of the adapter views has
-ugly lag during horizontal resizing.
+Second, since layout is recalculated asynchronously the bottom edge of the adapter view has
+ugly lag during horizontal resizes that cause vertical reflow.
