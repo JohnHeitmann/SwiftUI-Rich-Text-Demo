@@ -98,7 +98,7 @@ struct TextAttributes: OptionSet, Hashable {
 }
 ```
 
-`plainTextBlock` will be like an html `\<p>`, and `quote` will be like `\<quote>`. Instead
+`plainTextBlock` will be like an html `<p>`, and `quote` will be like `<quote>`. Instead
 of tracking style spans on the inline text, we just enumerate all the styles that apply
 to a particular chunk of text.
 
@@ -194,6 +194,7 @@ Rendered:
 * How does performance compare with NSAttributedString text views under AppKit?
 * Is it possible for user code to create custom inlineable Text elements, for example to add
 widgets like buttons inline into text?
+* Simulating links
 
 ## Alternative: Wrapping NSAttributedString Views
 
